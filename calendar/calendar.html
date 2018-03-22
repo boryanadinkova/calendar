@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>calendar</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+</head>
+<body>
+<div class="content-wrapper">
+    <div class="wrapper">
+        <div class="date" id="header">
+
+        </div>
+        <div class="calendar-body" id="container">
+            <!--<div class="calendar-item-header">Monday</div>-->
+            <!--<div class="calendar-item-header">Tuesday</div>-->
+            <!--<div class="calendar-item-header">Wednesday</div>-->
+            <!--<div class="calendar-item-header">Thursday</div>-->
+            <!--<div class="calendar-item-header">Friday</div>-->
+            <!--<div class="calendar-item-header">Saturday</div>-->
+            <!--<div class="calendar-item-header">Sunday</div>-->
+            <!--<div class="calendar-item">1</div>-->
+            <!--<div class="calendar-item">1</div>-->
+            <!--<div class="calendar-item">1</div>-->
+            <!--<div class="calendar-item">1</div>-->
+            <!--<div class="calendar-item">1</div>-->
+            <!--<div class="calendar-item">1</div>-->
+            <!--<div class="calendar-item">1</div>-->
+            <!--<div class="calendar-item">1</div>-->
+            <!--<div class="calendar-item">1</div>-->
+            <!--<div class="calendar-item">1</div>-->
+            <!--<div class="calendar-item">1</div>-->
+            <!--<div class="calendar-item">1</div>-->
+            <!--<div class="calendar-item">1</div>-->
+            <!--<div class="calendar-item">1</div>-->
+            <!--<div class="calendar-item">1</div>-->
+            <!--<div class="calendar-item">1</div>-->
+            <!--<div class="calendar-item">1</div>-->
+            <!--<div class="calendar-item">1</div>-->
+            <!--<div class="calendar-item">1</div>-->
+            <!--<div class="calendar-item">1</div>-->
+            <!--<div class="calendar-item">1</div>-->
+            <!--<div class="calendar-item">1</div>-->
+            <!--<div class="calendar-item">1</div>-->
+            <!--<div class="calendar-item">1</div>-->
+            <!--<div class="calendar-item">1</div>-->
+            <!--<div class="calendar-item">1</div>-->
+            <!--<div class="calendar-item">1</div>-->
+            <!--<div class="calendar-item">1</div>-->
+            <!--<div class="calendar-item">1</div>-->
+            <!--<div class="calendar-item">1</div>-->
+            <!--<div class="calendar-item">1</div>-->
+            <!--<div class="calendar-item">1</div>-->
+            <!--<div class="calendar-item">1</div>-->
+            <!--<div class="calendar-item">1</div>-->
+            <!--<div class="calendar-item">1</div>-->
+        </div>
+
+    </div>
+
+</div>
+</body>
+<footer>
+    <script>
+        var header = document.getElementById("header");
+        var body = document.getElementById("container");
+
+        function lastDayOfMonth(date){
+            return moment(date).endOf("month").format("DD");
+        }
+
+        function daysOfMonth(month){
+            return lastDayOfMonth(moment().add(month,"months"));
+        }
+        var days = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31];
+        var consecutiveDays = "";
+        var i;
+        for (i=0; i<=lastDayOfMonth(); i++) {
+            consecutiveDays += days[i] + '<br>';
+        }
+
+        document.getElementById("header").innerHTML = consecutiveDays;
+
+
+
+
+    </script>
+</footer>
+</html>
