@@ -1,31 +1,75 @@
 //@import "keno_mixins";
 
+$font-size-header: 5rem;
+$font-size-body: 3rem;
+$color: rgba(245, 245, 245, 0.8);
+$color-current: rgba(245, 245, 245, 1);
+$background-color: rgba(0, 0, 0, 0.8);
+
+
 [class*="col-"] {
   float: left;
   padding: 15px;
 }
 
-.col-1 {width: 8.33%;}
-.col-2 {width: 16.66%;}
-.col-3 {width: 25%;}
-.col-4 {width: 33.33%;}
-.col-5 {width: 41.66%;}
-.col-6 {width: 50%;}
-.col-7 {width: 58.33%;}
-.col-8 {width: 66.66%;}
-.col-9 {width: 75%;}
-.col-10 {width: 83.33%;}
-.col-11 {width: 91.66%;}
-.col-12 {width: 100%; }
+.col-1 {
+  width: 8.33%;
+}
+
+.col-2 {
+  width: 16.66%;
+}
+
+.col-3 {
+  width: 25%;
+}
+
+.col-4 {
+  width: 33.33%;
+}
+
+.col-5 {
+  width: 41.66%;
+}
+
+.col-6 {
+  width: 50%;
+}
+
+.col-7 {
+  width: 58.33%;
+}
+
+.col-8 {
+  width: 66.66%;
+}
+
+.col-9 {
+  width: 75%;
+}
+
+.col-10 {
+  width: 83.33%;
+}
+
+.col-11 {
+  width: 91.66%;
+}
+
+.col-12 {
+  width: 100%;
+}
 
 html, body {
+  width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 
 body {
   box-sizing: border-box;
   margin: 0;
- }
+}
 
 *,
 *:before,
@@ -35,21 +79,23 @@ body {
 
 .content-wrapper {
   height: 100%;
+  background-color: $background-color;
 }
 
-.wrapper{
+.wrapper {
   height: 100%;
-
-
+  color: $color;
 
   .date {
     width: 100%;
     height: 30%;
-    border: 2px solid green;
+    font-size: $font-size-header;
+    background-image:
+            radial-gradient(ellipse, rgba(0,0,0,0.6), rgba(60,60,60,0.8));
   }
 
   .calendar-body {
-    width: auto;
+    width: 100%;
     height: 70%;
     display: grid;
     box-sizing: content-box;
@@ -57,12 +103,28 @@ body {
 
     .calendar-item {
 
-      border: 2px solid;
+      border: 2px solid transparent;
       text-align: center;
-      margin: 5%;
+      font-size: $font-size-body;
+      margin: 4%;
 
+    }
+
+    .highlight {
+
+      font-weight: bold;
+      border-radius: 47%;
+      color: $color-current;
+      background-image: radial-gradient(ellipse, rgba(0,0,0,1), rgba(110,110,110,0.9));
     }
   }
 }
+
+.date, .calendar-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 
 
