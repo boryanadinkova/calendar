@@ -52,11 +52,100 @@ body {
 *:after {
   box-sizing: inherit; }
 
+/*
+.content-wrapper {
+  height: 100%;
+  background-color: $background-color;
+}
+
+.wrapper {
+  height: 100%;
+  color: $color;
+
+  .date {
+    width: 100%;
+    height: 30%;
+    font-size: $font-size-header;
+    background-image:
+            radial-gradient(ellipse, rgba(0,0,0,0.6), rgba(60,60,60,0.8));
+  }
+
+  .calendar-body {
+    width: 100%;
+    height: 70%;
+    grid-auto-rows: 60px;
+    display: grid;
+    box-sizing: content-box;
+    grid-template-columns: repeat(7,1fr);
+    grid-auto-columns: minmax(auto,162px);
+
+    .calendar-item {
+
+      border: 2px solid transparent;
+      font-size: $font-size-body;
+      grid-gap: 1rem;
+
+    }
+
+    .highlight {
+
+      font-weight: bold;
+      border-radius: 74%;
+      color: $color-current;
+      background-image: radial-gradient(circle, rgba(0,0,0,1), rgba(110,110,110,0.9));
+    }
+  }
+}
+
+.date, .calendar-item {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+
+@media only screen and (max-width: 600px) {
+
+  .wrapper {
+
+    .date {
+      font-size: $font-size-header - 2;
+    }
+
+    .calendar-body {
+      .calendar-item {
+
+        font-size: $font-size-body - 1;
+
+      }
+
+      .highlight {
+
+        border-radius: 60%;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 360px) {
+
+  .wrapper {
+    .calendar-body {
+      .calendar-item {
+
+        font-size: $font-size-body - 1.5;
+
+      }
+    }
+  }
+}
+*/
 .content-wrapper {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.8); }
 
 .wrapper {
+  display: flex;
+  flex-flow: row wrap;
   height: 100%;
   color: rgba(245, 245, 245, 0.8); }
   .wrapper .date {
@@ -65,25 +154,61 @@ body {
     font-size: 5rem;
     background-image: radial-gradient(ellipse, rgba(0, 0, 0, 0.6), rgba(60, 60, 60, 0.8)); }
   .wrapper .calendar-body {
-    width: 100%;
+    width: 91%;
     height: 70%;
-    display: grid;
-    box-sizing: content-box;
-    grid-template-columns: auto auto auto auto auto auto auto; }
+    margin: auto;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-content: center;
+    box-sizing: content-box; }
     .wrapper .calendar-body .calendar-item {
       border: 2px solid transparent;
-      text-align: center;
-      font-size: 3rem;
-      margin: 4%; }
+      width: 13.9%;
+      font-size: 3rem; }
     .wrapper .calendar-body .highlight {
       font-weight: bold;
-      border-radius: 47%;
+      border-radius: 74%;
       color: whitesmoke;
-      background-image: radial-gradient(ellipse, black, rgba(110, 110, 110, 0.9)); }
+      background-image: radial-gradient(circle, black, rgba(110, 110, 110, 0.9)); }
 
 .date, .calendar-item {
   display: flex;
   justify-content: center;
   align-items: center; }
+
+@media only screen and (max-width: 1137px) {
+  .wrapper .calendar-body .calendar-item {
+    width: 13.8%; } }
+@media only screen and (max-width: 904px) {
+  .wrapper .calendar-body .calendar-item {
+    width: 13.7%; } }
+@media only screen and (max-width: 826px) {
+  .wrapper .calendar-body .calendar-item {
+    width: 13.6%; } }
+@media only screen and (max-width: 640px) {
+  .wrapper .calendar-body .calendar-item {
+    width: 13.5%; } }
+@media only screen and (max-width: 600px) {
+  .wrapper .date {
+    font-size: 3rem; }
+  .wrapper .calendar-body .calendar-item {
+    font-size: 2rem; }
+  .wrapper .calendar-body .highlight {
+    border-radius: 60%; } }
+@media only screen and (max-width: 560px) {
+  .wrapper .calendar-body .calendar-item {
+    width: 13.4%; } }
+@media only screen and (max-width: 495px) {
+  .wrapper .calendar-body .calendar-item {
+    width: 13.2%; } }
+@media only screen and (max-width: 404px) {
+  .wrapper .calendar-body .calendar-item {
+    width: 13%; } }
+@media only screen and (max-width: 360px) {
+  .wrapper .calendar-body {
+    width: 100%; }
+    .wrapper .calendar-body .calendar-item {
+      font-size: 1.5rem; } }
 
 /*# sourceMappingURL=main.css.map */
