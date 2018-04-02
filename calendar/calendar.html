@@ -10,52 +10,25 @@
 <body>
 <div class="content-wrapper">
     <div class="wrapper">
-        <div class="date" id="header">
-
+        <div class="date" id="header"></div>
+        <div class="calendar-header">
+            <div class="calendar-item-header" id="Sunday">Su</div>
+            <div class="calendar-item-header" id="Monday">Mo</div>
+            <div class="calendar-item-header" id="Tuesday">Tu</div>
+            <div class="calendar-item-header" id="Wednesday">We</div>
+            <div class="calendar-item-header" id="Thursday">Th</div>
+            <div class="calendar-item-header" id="Friday">Fr</div>
+            <div class="calendar-item-header" id="Saturday">Sa</div>
+            <!--<div class="calendar-item-header" id="Sunday">Su</div>-->
         </div>
         <div class="calendar-body" id="container">
-            <!--<div class="calendar-item-header">Monday</div>-->
-            <!--<div class="calendar-item-header">Tuesday</div>-->
-            <!--<div class="calendar-item-header">Wednesday</div>-->
-            <!--<div class="calendar-item-header">Thursday</div>-->
-            <!--<div class="calendar-item-header">Friday</div>-->
-            <!--<div class="calendar-item-header">Saturday</div>-->
-            <!--<div class="calendar-item-header">Sunday</div>-->
-            <!--<div class="calendar-item">1</div>-->
-            <!--<div class="calendar-item">1</div>-->
-            <!--<div class="calendar-item">1</div>-->
-            <!--<div class="calendar-item">1</div>-->
-            <!--<div class="calendar-item">1</div>-->
-            <!--<div class="calendar-item">1</div>-->
-            <!--<div class="calendar-item">1</div>-->
-            <!--<div class="calendar-item">1</div>-->
-            <!--<div class="calendar-item">1</div>-->
-            <!--<div class="calendar-item">1</div>-->
-            <!--<div class="calendar-item">1</div>-->
-            <!--<div class="calendar-item">1</div>-->
-            <!--<div class="calendar-item">1</div>-->
-            <!--<div class="calendar-item">1</div>-->
-            <!--<div class="calendar-item">1</div>-->
-            <!--<div class="calendar-item">1</div>-->
-            <!--<div class="calendar-item">1</div>-->
-            <!--<div class="calendar-item">1</div>-->
-            <!--<div class="calendar-item">1</div>-->
-            <!--<div class="calendar-item">1</div>-->
-            <!--<div class="calendar-item">1</div>-->
-            <!--<div class="calendar-item">1</div>-->
-            <!--<div class="calendar-item">1</div>-->
-            <!--<div class="calendar-item">1</div>-->
-            <!--<div class="calendar-item">1</div>-->
-            <!--<div class="calendar-item">1</div>-->
-            <!--<div class="calendar-item">1</div>-->
-            <!--<div class="calendar-item">1</div>-->
-            <!--<div class="calendar-item">1</div>-->
-            <!--<div class="calendar-item">1</div>-->
-            <!--<div class="calendar-item">1</div>-->
-            <!--<div class="calendar-item">1</div>-->
-            <!--<div class="calendar-item">1</div>-->
-            <!--<div class="calendar-item">1</div>-->
-            <!--<div class="calendar-item">1</div>-->
+
+        </div>
+
+        <div class="month-switch">
+            <div class="arrow-left" id="arrow-left"></div>
+            <div class="month-container" id="month-container"></div>
+            <div class="arrow-right" id="arrow-right"></div>
         </div>
 
     </div>
@@ -64,63 +37,165 @@
 </body>
 <footer>
     <script>
-        var header = document.getElementById("header");
-        var body = document.getElementById("container");
 
-        function lastDayOfMonth(date) {
+        function clearBox(elementID)
+        {
+            const div = document.getElementById(elementID);
+            while(div.firstChild){
+                div.removeChild(div.firstChild);
+            }
+        }
+
+
+        // getting elements from DOM
+        const header = document.getElementById("header");
+        const body = document.getElementById("container");
+        const days = document.getElementsByClassName('calendar-item');
+        const leftArrow = document.getElementById("arrow-left");
+        const rightArrow = document.getElementById("arrow-right");
+        const monthContainer = document.getElementById("month-container");
+        // getting instance from moment.js
+        const now = moment();
+
+        // getting date, month, year in format (01 01 2000)
+        let currentDay = now.format("DD");
+        let month = now.format('MM');
+        let year = now.format('YYYY');
+
+        // getting first and last day of month
+        const firstDayOfMonth = getFirstDayOfMonth();
+        const lastDayOfMonth = getLastDayOfMonth();
+
+        // fields to be filled with calendar data
+        let calendarCells = '';
+        let blankCell = '';
+        // console.log(moment().startOf("month").format("dd"));
+
+
+
+        /* -------- Declaring functions - START --------*/
+        // HTML templates
+        function creatingCells(monthDay, month, year, today) {
+            return `<div data-day="${monthDay}"
+                         data-month="${month}"
+                         data-year="${year}"
+                         class="calendar-item ${today}">
+                         ${monthDay}
+                         </div>`;
+        }
+
+        //HTML cells generator - START
+        function fillCalendarCells(now) {
+            console.log(now);
+            for (let monthDay = 1; monthDay <= lastDayOfMonth; monthDay++) {
+                let today = "";
+                if (monthDay == currentDay) {
+                    today = "highlight";
+                }
+
+                calendarCells += creatingCells(monthDay, now.format('MM'), now.format('YYYY'), today);
+            }
+        }
+
+        function fillBlankCell() {
+            for (let blank = 1; blank < firstDayOfMonth; blank++) {
+                blankCell += "<div class='calendar-item'></div>"
+            }
+        }
+
+        //HTML cells generator - END
+
+
+        // Get proper date in proper format
+
+        // Returns first day of month as weekday in format (1-7).
+        function getFirstDayOfMonth() {
+            return moment().startOf("isoWeek").format("d");
+        }
+
+        // Returns last day of month in format (1-31) to determine the length of month.
+        // todo see arguments if needed
+        function getLastDayOfMonth(date) {
             return moment(date).endOf("month").format("DD");
         }
 
-
-        function daysOfMonth(month) {
-            return lastDayOfMonth(moment().add(month, "months"));
-        }
-
-        var lastDay = lastDayOfMonth();
-
-        var calendarCells = '';
-
-        var now = moment();
-        var currentDay = now.format("DD");
-        var month = now.format('MM');
-        var year = now.format('YYYY');
-        //console.log(currentDay);
-
-
-        for (var monthDay = 1; monthDay <= lastDay; monthDay++) {
-            var today = "";
-            if (monthDay == currentDay) {
-                today = "highlight";
-            }
-
-            //'<div data-day="' + monthDay + '">' + monthDay + '</div>'
-            calendarCells += `<div
-                                data-day="${monthDay}"
-                                data-month="${month}"
-                                data-year="${year}"
-                                class="calendar-item ${today}">
-                                    ${monthDay}
-                                </div>`;
-
+        // Returns number of days for next months and previous months. (month) argument needs to be an integer.
+        function getDaysOfNextMonth(month) {
+            return getLastDayOfMonth(now.add(month, "months"));
         }
 
 
-        body.innerHTML = calendarCells;
+        function getDaysOfPreviousMonth(month) {
+            return getLastDayOfMonth(now.subtract(month, "months"));
+        }
 
-        function dateToday(date) {
+        // Returns date in format 01 January 2000
+        // todo see arguments if needed
+        function getDateToday(date) {
             return moment(date).format("DD MMMM YYYY");
         }
 
-
-        document.getElementById("header").innerHTML = dateToday();
-
-        var days = document.getElementsByClassName('calendar-item');
-        for(var day of days) {
-            day.addEventListener('click', function (event) {
-                var datasetTarget = event.target.dataset;
-                console.log(moment(`${datasetTarget.year}-${datasetTarget.month}-${datasetTarget.day}`).format('dddd'));
-            });
+        //Attach click event to calendar cells to display cell content in format Monday-Sunday.
+        function addEventListenerToCell() {
+            for (const day of days) {
+                day.addEventListener('click', function (event) {
+                    const datasetTarget = event.target.dataset;
+                    // console.log(moment(`${datasetTarget.year}-${datasetTarget.month}-${datasetTarget.day}`).format('dddd'));
+                });
+            }
         }
+
+        //Render functions - START
+        function renderCalendarBody(now) {
+            fillBlankCell();
+            fillCalendarCells(now);
+        }
+
+        function renderCalendar(now) {
+            renderCalendarBody(now);
+
+            //Fill all HTML to calendar
+            body.innerHTML = blankCell + calendarCells;
+            header.innerHTML = getDateToday();
+            monthContainer.innerHTML = now.format('MMMM YYYY');
+        }
+
+
+        // function getNextMonths(date) {
+        //     return moment(date).format("MMMM YYYY");
+        // }
+
+        // function switchMonth() {
+        //     document.getElementById("month-container").innerHTML = moment().format("MMMM YYYY");
+        // }
+
+        //Render functions - END
+
+        /* -------- Declaring functions - END --------*/
+
+
+        leftArrow.addEventListener('click', function () {
+            clearBox("container");
+            // getDaysOfPreviousMonth(1);
+            // renderCalendar();
+            now.add(-1,"months");
+            // console.log('now' + now);
+            renderCalendar(now);
+
+
+        });
+
+        rightArrow.addEventListener('click', function () {
+            clearBox("container");
+            now.add(1, "months");
+            // console.log(now);
+            renderCalendar(now);
+        });
+
+
+        //
+        renderCalendar(now);
+        addEventListenerToCell();
 
     </script>
 </footer>
