@@ -93,6 +93,15 @@ body {
       border-radius: 74%;
       color: whitesmoke;
       background-image: radial-gradient(circle, black, rgba(110, 110, 110, 0.9)); }
+  .wrapper .calendar-header :last-child,
+  .wrapper .calendar-body :nth-child(7n) {
+    font-weight: bolder;
+    color: rgba(150, 150, 150, 0.6); }
+  .wrapper .calendar-header :first-child,
+  .wrapper .calendar-body :first-child,
+  .wrapper .calendar-body :nth-child(7n + 1) {
+    font-weight: bolder;
+    color: #c8c8c8; }
   .wrapper .month-switch {
     display: grid;
     width: 100%;
@@ -121,6 +130,8 @@ body {
       border-left-color: rgba(245, 245, 245, 0.7); }
   .wrapper .arrow-right, .wrapper .arrow-left, .wrapper .calendar-item {
     cursor: pointer; }
+  .wrapper .month-container {
+    font-size: 3rem; }
 
 .date, .calendar-item {
   display: grid;
@@ -169,7 +180,9 @@ body {
       border-bottom: 15px solid transparent; }
     .wrapper .month-switch .arrow-left {
       border-top: 15px solid transparent;
-      border-bottom: 15px solid transparent; } }
+      border-bottom: 15px solid transparent; }
+    .wrapper .month-switch .month-container {
+      font-size: 2rem; } }
 @media only screen and (max-width: 812px) {
   .wrapper .date {
     height: 20%;
@@ -177,14 +190,14 @@ body {
   .wrapper .calendar-header {
     width: 80%; }
     .wrapper .calendar-header .calendar-item-header {
-      font-size: 1rem; }
+      font-size: 2rem; }
   .wrapper .calendar-body {
     width: 80%;
     margin: 0 auto;
     height: 50%;
     grid-auto-rows: 35px; }
     .wrapper .calendar-body .calendar-item {
-      font-size: 1rem; }
+      font-size: 2rem; }
     .wrapper .calendar-body .highlight {
       border-radius: 60%; }
   .wrapper .month-switch {
@@ -194,7 +207,9 @@ body {
       border-bottom: 15px solid transparent; }
     .wrapper .month-switch .arrow-left {
       border-top: 15px solid transparent;
-      border-bottom: 15px solid transparent; } }
+      border-bottom: 15px solid transparent; }
+    .wrapper .month-switch .month-container {
+      font-size: 1.5rem; } }
 @media only screen and (max-width: 768px) {
   .wrapper .calendar-body {
     height: 50%; } }
@@ -221,12 +236,18 @@ body {
 @media only screen and (max-width: 414px) {
   .wrapper .month-switch .arrow-right {
     border-top: 25px solid transparent;
-    border-bottom: 25px solid transparent; }
+    border-bottom: 25px solid transparent;
+    border-left: 60px solid rgba(245, 245, 245, 0.6); }
   .wrapper .month-switch .arrow-left {
     border-top: 25px solid transparent;
-    border-bottom: 25px solid transparent; } }
+    border-bottom: 25px solid transparent;
+    border-right: 60px solid rgba(245, 245, 245, 0.6); }
+  .wrapper .month-switch .month-container {
+    font-size: 1rem; } }
 @media only screen and (max-width: 360px) {
   .wrapper .calendar-body .calendar-item {
-    font-size: 1rem; } }
+    font-size: 1rem; }
+  .wrapper .month-switch .month-container {
+    font-size: 0.8rem; } }
 
 /*# sourceMappingURL=main.css.map */

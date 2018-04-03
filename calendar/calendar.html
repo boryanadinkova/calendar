@@ -62,10 +62,6 @@
         let month = now.format('MM');
         let year = now.format('YYYY');
 
-        // getting first and last day of month
-        const firstDayOfMonth = getFirstDayOfMonth();
-        const lastDayOfMonth = getLastDayOfMonth();
-
         // fields to be filled with calendar data
         let calendarCells = '';
         let blankCell = '';
@@ -84,10 +80,12 @@
                          </div>`;
         }
 
+
+
         //HTML cells generator - START
         function fillCalendarCells(now) {
-            console.log(now);
-            for (let monthDay = 1; monthDay <= lastDayOfMonth; monthDay++) {
+            //console.log(now);
+            for (let monthDay = 1; monthDay <= getLastDayOfMonth(now); monthDay++) {
                 let today = "";
                 if (monthDay == currentDay) {
                     today = "highlight";
@@ -97,8 +95,8 @@
             }
         }
 
-        function fillBlankCell() {
-            for (let blank = 1; blank < firstDayOfMonth; blank++) {
+        function fillBlankCell(now) {
+            for (let blank = 0; blank < getFirstDayOfMonth(now); blank++) {
                 blankCell += "<div class='calendar-item'></div>"
             }
         }
@@ -109,17 +107,19 @@
         // Get proper date in proper format
 
         // Returns first day of month as weekday in format (1-7).
-        function getFirstDayOfMonth() {
-            return moment().startOf("isoWeek").format("d");
+        function getFirstDayOfMonth(now) {
+            return moment(now).startOf("month").format("d");
         }
 
-        // Returns last day of month in format (1-31) to determine the length of month.
-        // todo see arguments if needed
-        function getLastDayOfMonth(date) {
-            return moment(date).endOf("month").format("DD");
+        // Returns last day of month in format (1-31) to determine the length of month.OK
+
+        function getLastDayOfMonth(now) {
+            return moment(now).endOf("month").format("DD");
         }
 
-        // Returns number of days for next months and previous months. (month) argument needs to be an integer.
+
+
+        // Returns number of days for next months and previous months. (month) argument needs to be an integer. OK
         function getDaysOfNextMonth(month) {
             return getLastDayOfMonth(now.add(month, "months"));
         }
@@ -130,24 +130,25 @@
         }
 
         // Returns date in format 01 January 2000
-        // todo see arguments if needed
+
         function getDateToday(date) {
             return moment(date).format("DD MMMM YYYY");
         }
 
-        //Attach click event to calendar cells to display cell content in format Monday-Sunday.
+        //Attach click event to calendar cells to display cell content in format Monday-Sunday OK
         function addEventListenerToCell() {
             for (const day of days) {
                 day.addEventListener('click', function (event) {
                     const datasetTarget = event.target.dataset;
-                    // console.log(moment(`${datasetTarget.year}-${datasetTarget.month}-${datasetTarget.day}`).format('dddd'));
+                    console.log(moment(`${datasetTarget.year}-${datasetTarget.month}-${datasetTarget.day}`).format('dddd'));
                 });
             }
         }
 
+
         //Render functions - START
         function renderCalendarBody(now) {
-            fillBlankCell();
+            fillBlankCell(now);
             fillCalendarCells(now);
         }
 
@@ -180,16 +181,20 @@
             // renderCalendar();
             now.add(-1,"months");
             // console.log('now' + now);
+            calendarCells = '';
+            blankCell = '';
             renderCalendar(now);
-
-
+            addEventListenerToCell()
         });
 
         rightArrow.addEventListener('click', function () {
             clearBox("container");
             now.add(1, "months");
             // console.log(now);
+            calendarCells = '';
+            blankCell = '';
             renderCalendar(now);
+            addEventListenerToCell()
         });
 
 
