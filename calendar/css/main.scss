@@ -143,14 +143,14 @@ body {
 .calendar-header :last-child,
 .calendar-body :nth-child(7n) {
   font-weight:bolder;
-  color: rgba(150,150,150,0.6);
+  color: rgba(180,180,180,0.6);
 }
 
 .calendar-header :first-child,
 .calendar-body :first-child,
 .calendar-body :nth-child(7n + 1) {
   font-weight:bolder;
-  color: rgba(200,200,200,1);
+  color: rgba(160,160,160,1);
 }
   .month-switch {
     display: grid;
@@ -268,7 +268,7 @@ body {
       width: 85%;
       height: 53%;
       margin: 0 auto;
-      grid-auto-rows: 40px;
+      grid-auto-rows: 35px;
 
       .calendar-item {
 
@@ -318,10 +318,10 @@ body {
       width: 80%;
       margin: 0 auto;
       height: 50%;
-      grid-auto-rows: 35px;
+      grid-auto-rows: 31px;
       .calendar-item {
 
-        font-size: $font-size-body - 1;
+        font-size: $font-size-body - 1.5;
 
       }
 
@@ -396,8 +396,8 @@ body {
       width: 80%;
     }
     .calendar-body {
-      height: 57%;
-      grid-auto-rows: 35px;
+      height: 50%;
+      grid-auto-rows: 25px;
 
       .calendar-item {
 
@@ -913,3 +913,127 @@ body {
 //  }
 //}
 //
+
+.modal {
+  transition: all 0.3s ease-in-out 1ms;
+  display: block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  overflow: auto;
+  background-color:rgba(0,0,0,0.5) ;
+  transition-timing-function: linear;
+  //pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+
+  .modal-content{
+    background-color: #f4f4f4;
+    margin: 20% auto;
+    width: 70%;
+    border-radius: 15px;
+
+
+
+
+    .modal-header {
+      display: grid;
+      grid-template-columns: 97% 3%;
+      background: #7d7e7d; /* Old browsers */
+      background: -moz-linear-gradient(top, #7d7e7d 0%, #0e0e0e 100%); /* FF3.6-15 */
+      background: -webkit-linear-gradient(top, #7d7e7d 0%,#0e0e0e 100%); /* Chrome10-25,Safari5.1-6 */
+      background: linear-gradient(to bottom, #7d7e7d 0%,#0e0e0e 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', endColorstr='#0e0e0e',GradientType=0 ); /* IE6-9 */
+      border-radius:15px 15px 0 0;
+      padding: 15px;
+      color: #fff;
+      justify-content: center;
+      align-items: center;
+
+    }
+    .modal-body {
+
+      padding: 30px 15px;
+
+      textarea {
+        width: 100%;
+        height: 200px;
+        border: 1px solid #a0a0a0;
+        background-color: transparent;
+        border-radius: 10px;
+        padding: 20px;
+        -webkit-box-shadow: 3px 10px 15px 0px rgba(0,0,0,0.69);
+        -moz-box-shadow: 3px 10px 15px 0px rgba(0,0,0,0.69);
+        box-shadow: 3px 10px 15px 0px rgba(0,0,0,0.69);
+        outline: none;
+      }
+
+    }
+
+
+    .modal-footer {
+      display: grid;
+      width: 100%;
+      height:50%;
+      grid-template-columns: repeat(2, 1fr);
+      justify-items: center;
+      align-items: center;
+      background: #0e0e0e; /* Old browsers */
+      background: -moz-linear-gradient(top, #0e0e0e 0%, #7d7e7d 100%); /* FF3.6-15 */
+      background: -webkit-linear-gradient(top, #0e0e0e 0%,#7d7e7d 100%); /* Chrome10-25,Safari5.1-6 */
+      background: linear-gradient(to bottom, #0e0e0e 0%,#7d7e7d 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0e0e0e', endColorstr='#7d7e7d',GradientType=0 ); /* IE6-9 */
+      border-radius: 0 0 15px 15px;
+      padding: 10px;
+      color: #fff;
+      text-align: center;
+      .modal-arrow-right {
+        width: 0;
+        height: 0;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        border-left: 50px solid $color-arrows;
+      }
+
+      .modal-arrow-left {
+        width: 0;
+        height: 0;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        border-right: 50px solid $color-arrows;
+
+      }
+
+    }
+
+    .modal-header > h2 {
+      margin:0;
+      text-align: center;
+      font-size: $font-size-body - 2;
+    }
+    .closeBtn {
+      color: #fff;
+      float: right;
+      font-size:30px;
+    }
+
+    .closeBtn:hover, .closeBtn:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+
+    }
+  }
+}
+.visible {
+  opacity: 1;
+  visibility: visible;
+  //z-index: 1;
+}
+
+//@keyframes modalopen{
+//from {opacity: 0}
+//to {opacity: 1}
+//}
