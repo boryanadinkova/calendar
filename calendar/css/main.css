@@ -284,7 +284,8 @@ body {
       padding: 15px;
       color: #fff;
       justify-content: center;
-      align-items: center; }
+      align-items: center;
+      cursor: default; }
     .modal .modal-content .modal-body {
       padding: 30px 15px; }
       .modal .modal-content .modal-body textarea {
@@ -298,6 +299,8 @@ body {
         -moz-box-shadow: 3px 10px 15px 0px rgba(0, 0, 0, 0.69);
         box-shadow: 3px 10px 15px 0px rgba(0, 0, 0, 0.69);
         outline: none; }
+      .modal .modal-content .modal-body #hour {
+        cursor: default; }
     .modal .modal-content .modal-footer {
       display: grid;
       width: 100%;
@@ -331,6 +334,13 @@ body {
         border-top: 10px solid transparent;
         border-bottom: 10px solid transparent;
         border-right: 50px solid rgba(245, 245, 245, 0.6); }
+      .modal .modal-content .modal-footer .modal-arrow-right,
+      .modal .modal-content .modal-footer .modal-arrow-left {
+        cursor: pointer; }
+    .modal .modal-content .modal-arrow-right:hover,
+    .modal .modal-content .modal-arrow-left:hover {
+      transform: scale(1.1);
+      transition: all 0.5s ease; }
     .modal .modal-content .modal-header > h2 {
       margin: 0;
       text-align: center;
@@ -339,7 +349,8 @@ body {
       color: #fff;
       float: right;
       font-size: 30px; }
-    .modal .modal-content .closeBtn:hover, .modal .modal-content .closeBtn:focus {
+    .modal .modal-content .closeBtn:hover,
+    .modal .modal-content .closeBtn:focus {
       color: #000;
       text-decoration: none;
       cursor: pointer; }

@@ -951,6 +951,7 @@ body {
       color: #fff;
       justify-content: center;
       align-items: center;
+      cursor: default;
 
     }
     .modal-body {
@@ -969,7 +970,9 @@ body {
         box-shadow: 3px 10px 15px 0px rgba(0,0,0,0.69);
         outline: none;
       }
-
+      #hour {
+        cursor: default;
+      }
     }
 
 
@@ -1005,9 +1008,16 @@ body {
         border-right: 50px solid $color-arrows;
 
       }
-
+      .modal-arrow-right,
+      .modal-arrow-left {
+        cursor: pointer;
+      }
     }
-
+    .modal-arrow-right:hover,
+    .modal-arrow-left:hover {
+      transform: scale(1.1);
+      transition: all 0.5s ease;
+    }
     .modal-header > h2 {
       margin:0;
       text-align: center;
@@ -1019,7 +1029,8 @@ body {
       font-size:30px;
     }
 
-    .closeBtn:hover, .closeBtn:focus {
+    .closeBtn:hover,
+    .closeBtn:focus {
       color: #000;
       text-decoration: none;
       cursor: pointer;
