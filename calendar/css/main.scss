@@ -93,7 +93,7 @@ body {
 
   .date {
     width: 100%;
-    height: 30%;
+    height: 20%;
     font-size: $font-size-header;
     background-image:
             radial-gradient(ellipse, rgba(0,0,0,0.6), rgba(60,60,60,0.8));
@@ -103,7 +103,7 @@ body {
   .calendar-header {
     display: grid;
     width: 100%;
-    height: 15%;
+    height: 10%;
     margin: 0 auto;
     grid-template-columns: repeat(7,1fr);
     grid-auto-columns: minmax(auto,162px);
@@ -117,7 +117,7 @@ body {
   }
   .calendar-body {
     width: 100%;
-    height: 40%;
+    height: 55%;
     grid-auto-rows: 60px;
     display: grid;
     box-sizing: content-box;
@@ -415,6 +415,11 @@ body {
 @media only screen and (max-width: 414px) {
 
   .wrapper {
+    .calendar-header {
+      .calendar-item-header {
+        font-size: $font-size-body - 1.5;
+      }
+    }
 
     .month-switch {
 
