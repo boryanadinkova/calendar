@@ -38,8 +38,9 @@
             <span class="closeBtn">&times;</span>
         </div>
         <div class="modal-body" id="modal-body">
-            <p id="hour"></p>
-            <textarea id="textarea"></textarea>
+            <div id="hour"></div>
+
+            <!--<textarea id="textarea"></textarea>-->
         </div>
         <div class="modal-footer">
             <div class="modal-arrow-left" id="modal-arrow-left"></div>
@@ -50,9 +51,7 @@
 </body>
 <footer>
     <script>
-
-
-        // getting elements from DOM
+        /* --- Get elements from DOM --- */
         const header = document.getElementById("header");
         const body = document.getElementById("container");
         const days = document.getElementsByClassName('calendar-item');
@@ -60,27 +59,29 @@
         const rightArrow = document.getElementById("arrow-right");
         const monthContainer = document.getElementById("month-container");
         const modalHeader = document.getElementById("modalHeader");
-            //Get modal elements
+        //Get modal elements
         const modal = document.getElementById('simpleModal');
         const closeBtn = document.getElementsByClassName('closeBtn')[0];
         const leftModalArrow = document.getElementById('modal-arrow-left');
         const rightModalArrow = document.getElementById('modal-arrow-right');
-        const modalTimeField = document.getElementById("hour");
-
-        // getting instance from moment.js
+        const modalBody = document.getElementById("modal-body");
+        let hourDiv = document.getElementById("hour");
+        //Get modal dynamic content
+        let hours = ["7:00 AM", "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM"];
+        let textarea = ["", "", "", "", "", "", "", "", "", "", "", "", "", ""];
+        let currentHour = 0;
+        /* --- Get instance from moment.js ---*/
         const now = moment();
-
-        // getting date, month, year in format (01 01 2000)
+        // Get date, month, year in format (01 01 2000)
         let currentDay = now.format("DD");
         let month = now.format('MM');
-
         // fields to be filled with calendar data
         let calendarCells = '';
         let blankCell = '';
 
-        // console.log(moment().startOf("month").format("dd"));
+        /* -------- Declaring functions - START --------*/
 
-
+        // Clear element content
         const clearBox = elementID => {
             const div = document.getElementById(elementID);
             while (div.firstChild) {
@@ -88,25 +89,28 @@
             }
         };
 
-        /* -------- Declaring functions - START --------*/
-        // HTML templates
+        /*---Date-binding functions---*/
+
+        // Returns first day of month as weekday in format (1-7).
+        const getFirstDayOfMonth = now => {
+            return moment(now).startOf("month").format("d");
+        };
+        // Returns last day of month in format (1-31) to determine the length of month.
+        const getLastDayOfMonth = now => {
+            return moment(now).endOf("month").format("DD");
+        };
+        // Returns date in format 01 January 2000.
+        const getDateToday = date => {
+            return moment(date).format("DD MMMM YYYY");
+        };
+
+        /*--- HTML templates---*/
+
+        //Creates calendar cells and returns data
         const creatingCells = (monthDay, month, year, today) => {
             return `<div data-day="${monthDay}" data-month="${month}" data-year="${year}" class="calendar-item ${today}"> ${monthDay} </div>`;
         };
-
         //HTML cells generator - START
-
-        const fillBlankCell = now => {
-            for (let blank = 0; blank < getFirstDayOfMonth(now); blank++) {
-                blankCell += "<div class='calendar-item'></div>"
-            }
-        };
-
-        //HTML cells generator - END
-
-
-        // Get proper date in proper format
-
         const fillCalendarCells = now => {
             for (let monthDay = 1; monthDay <= getLastDayOfMonth(now); monthDay++) {
                 let today = "";
@@ -116,65 +120,92 @@
                 calendarCells += creatingCells(monthDay, now.format('MM'), now.format('YYYY'), today);
             }
         };
+        const fillBlankCell = now => {
+            for (let blank = 0; blank < getFirstDayOfMonth(now); blank++) {
+                blankCell += "<div class='calendar-item'></div>"
+            }
+        };
+        //Click events on calendar cells and modal open/close
 
-        // Returns first day of month as weekday in format (1-7).
-        const getFirstDayOfMonth = now => {
-            return moment(now).startOf("month").format("d");
+        const openModal = function (event) {
+            modalHeader.innerHTML = (moment(`${this.dataset.year}-${this.dataset.month}-${this.dataset.day}`).format('dddd, DD MMMM YYYY'));
+            modal.classList.add("visible");
+            hourDiv.innerHTML = hours[0];
+            modalBody.innerHTML += `<textarea></textarea>`;
+            // modal.style.display = "block";
         };
 
-        // Returns last day of month in format (1-31) to determine the length of month.OK
-        const getLastDayOfMonth = now => {
-            return moment(now).endOf("month").format("DD");
+
+        //    function to openModal
+        const closeModal = function () {
+            modal.classList.remove("visible");
+        };
+        //function to closeModal on click outside
+        const clickOutside = outside => {
+            if (outside.target == modal) {
+                // modal.style.display = "none";
+                modal.classList.remove("visible");
+            }
         };
 
-        // Returns number of days for next months and previous months. (month) argument needs to be an integer. OK
-        const getDaysOfNextMonth = month => {
-            return getLastDayOfMonth(now.add(month, "months"));
-        };
-
-
-        const getDaysOfPreviousMonth = month => {
-            return getLastDayOfMonth(now.subtract(month, "months"));
-        };
-
-        // Returns date in format 01 January 2000
-
-        const getDateToday = date => {
-            return moment(date).format("DD MMMM YYYY");
-        };
-
-        //Attach click event to calendar cells to display cell content in format Monday-Sunday OK
         const addEventListenerToCell = () => {
             for (const day of days) {
-                // day.addEventListener('click', function (event) {
-                //     const datasetTarget = event.target.dataset;
-                //     console.log(moment(`${datasetTarget.year}-${datasetTarget.month}-${datasetTarget.day}`).format('dddd'));
-                //
-                // });
+                day.addEventListener('click', function (event) {
+                    const datasetTarget = event.target.dataset;
+                    console.log(moment(`${datasetTarget.year}-${datasetTarget.month}-${datasetTarget.day}`).format('DD MMMM YYYY - dddd'));
+
+                });
                 day.addEventListener('click', openModal);
             }
         };
 
-        //Render functions - START
+        /*--- Compile calendar and emulate month switch START ---*/
+
+        //Event listeners Modal
+        //    listen for close click
+        closeBtn.addEventListener('click', closeModal);
+        //    listen for outside click
+        window.addEventListener('click', clickOutside);
+        //Functions Modal - START
+        //    function to openModal
+
+
+        rightModalArrow.addEventListener('click', function () {
+            if (currentHour < hours.length - 1 && currentHour >= 0) {
+                currentHour++;
+                document.getElementById("hour").innerHTML = hours[currentHour];
+            } else {
+                currentHour = 0;
+                document.getElementById("hour").innerHTML = hours[currentHour];
+            }
+        });
+        leftModalArrow.addEventListener('click', function () {
+            if (currentHour <= hours.length && currentHour >= 0) {
+                if (currentHour === 0) {
+                    currentHour = hours.length;
+
+                }
+
+                currentHour--;
+                document.getElementById("hour").innerHTML = hours[currentHour];
+                console.log(currentHour);
+                console.log(hourDiv);
+                console.log(hours[currentHour]);
+            }
+        });
+
+        /*--- Compile calendar and emulate month switch START ---*/
         const renderCalendarBody = now => {
             fillBlankCell(now);
             fillCalendarCells(now);
         };
-
         const renderCalendar = now => {
             renderCalendarBody(now);
-
             //Fill all HTML to calendar
             body.innerHTML = blankCell + calendarCells;
             header.innerHTML = getDateToday();
             monthContainer.innerHTML = now.format('MMMM YYYY');
         };
-
-        //Render functions - END
-
-        /* -------- Declaring functions - END --------*/
-
-
         leftArrow.addEventListener('click', function () {
             clearBox("container");
             now.add(-1, "months");
@@ -183,7 +214,6 @@
             renderCalendar(now);
             addEventListenerToCell()
         });
-
         rightArrow.addEventListener('click', function () {
             clearBox("container");
             now.add(1, "months");
@@ -193,61 +223,8 @@
             addEventListenerToCell()
         });
 
-
-        //
         renderCalendar(now);
         addEventListenerToCell();
-
-
-        //Event listeners Modal
-
-        //    listen for close click
-        closeBtn.addEventListener('click', closeModal);
-        //    listen for outside click
-        window.addEventListener('click', clickOutside);
-
-        //Functions Modal - START
-        //    function to openModal
-        const openModal = event => {
-            console.log(this);
-            modalHeader.innerHTML = (moment(`${this.dataset.year}-${this.dataset.month}-${this.dataset.day}`).format('DD MMMM YYYY'));
-            //console.log(event.target);
-            modal.classList.add("visible");
-            // modal.style.display = "block";
-        };
-
-        //    function to openModal
-        const closeModal = () => {
-            modal.classList.remove("visible");
-        };
-
-        //function to closeModal on click outside
-        const clickOutside = outside => {
-            if (outside.target == modal) {
-                // modal.style.display = "none";
-                modal.classList.remove("visible");
-            }
-        };
-
-        //    Functions Modal - END
-
-        let hours = ["7:00 AM", "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM"];
-
-        modalTimeField.innerHTML = hours[0];
-
-        console.log(hours.length);
-        // Modal arrows onclick function - add one hour to hours of the day, clear textarea and display new one, for the new hour.
-
-        // leftModalArrow.addEventListener('click', function () {
-        //     // now.add(-1,"hours");
-        //     clearBox("textarea");
-        // });
-        //
-        // rightModalArrow.addEventListener('click', function () {
-        //     // now.add(-1,"hours");
-        //     clearBox("textarea");
-        // });
-
 
     </script>
 </footer>
