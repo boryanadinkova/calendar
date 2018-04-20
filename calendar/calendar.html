@@ -40,10 +40,11 @@
         <div class="modal-body" id="modal-body">
             <div id="hour"></div>
 
-            <!--<textarea id="textarea"></textarea>-->
+            <textarea id="textarea"></textarea>
         </div>
         <div class="modal-footer">
             <div class="modal-arrow-left" id="modal-arrow-left"></div>
+            <div id="modal-save">Save</div>
             <div class="modal-arrow-right" id="modal-arrow-right"></div>
         </div>
     </div>
@@ -65,10 +66,12 @@
         const leftModalArrow = document.getElementById('modal-arrow-left');
         const rightModalArrow = document.getElementById('modal-arrow-right');
         const modalBody = document.getElementById("modal-body");
+        const modalSave = document.getElementById("modal-save");
+        let textArea = document.getElementById("textarea");
         let hourDiv = document.getElementById("hour");
         //Get modal dynamic content
         let hours = ["7:00 AM", "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM"];
-        let textarea = ["", "", "", "", "", "", "", "", "", "", "", "", "", ""];
+        let textAreaBody = ["", "", "", "", "", "", "", "", "", "", "", "", "", ""];
         let currentHour = 0;
         /* --- Get instance from moment.js ---*/
         const now = moment();
@@ -79,6 +82,9 @@
         let calendarCells = '';
         let blankCell = '';
 
+        let modalHead = "";
+
+
         /* -------- Declaring functions - START --------*/
 
         // Clear element content
@@ -88,7 +94,6 @@
                 div.removeChild(div.firstChild);
             }
         };
-
         /*---Date-binding functions---*/
 
         // Returns first day of month as weekday in format (1-7).
@@ -110,6 +115,7 @@
         const creatingCells = (monthDay, month, year, today) => {
             return `<div data-day="${monthDay}" data-month="${month}" data-year="${year}" class="calendar-item ${today}"> ${monthDay} </div>`;
         };
+
         //HTML cells generator - START
         const fillCalendarCells = now => {
             for (let monthDay = 1; monthDay <= getLastDayOfMonth(now); monthDay++) {
@@ -125,74 +131,98 @@
                 blankCell += "<div class='calendar-item'></div>"
             }
         };
-        //Click events on calendar cells and modal open/close
 
+        /*----Create Modal ----*/
+        //Click events on calendar cells and modal open/close
         const openModal = function (event) {
             modalHeader.innerHTML = (moment(`${this.dataset.year}-${this.dataset.month}-${this.dataset.day}`).format('dddd, DD MMMM YYYY'));
+            hourDiv.innerHTML = hours[currentHour];
             modal.classList.add("visible");
-            hourDiv.innerHTML = hours[0];
-            modalBody.innerHTML += `<textarea></textarea>`;
-            // modal.style.display = "block";
+
+            // dsadasdasdas
+
+
         };
 
-
-        //    function to openModal
         const closeModal = function () {
             modal.classList.remove("visible");
         };
-        //function to closeModal on click outside
+        closeBtn.addEventListener('click', closeModal);
+
         const clickOutside = outside => {
             if (outside.target == modal) {
                 // modal.style.display = "none";
                 modal.classList.remove("visible");
             }
         };
+        window.addEventListener('click', clickOutside);
 
         const addEventListenerToCell = () => {
             for (const day of days) {
                 day.addEventListener('click', function (event) {
                     const datasetTarget = event.target.dataset;
-                    console.log(moment(`${datasetTarget.year}-${datasetTarget.month}-${datasetTarget.day}`).format('DD MMMM YYYY - dddd'));
-
+                    //console.log(moment(`${datasetTarget.year}-${datasetTarget.month}-${datasetTarget.day}`).format('DD MMMM YYYY - dddd'));
                 });
                 day.addEventListener('click', openModal);
             }
         };
 
-        /*--- Compile calendar and emulate month switch START ---*/
-
-        //Event listeners Modal
-        //    listen for close click
-        closeBtn.addEventListener('click', closeModal);
-        //    listen for outside click
-        window.addEventListener('click', clickOutside);
-        //Functions Modal - START
-        //    function to openModal
-
-
         rightModalArrow.addEventListener('click', function () {
             if (currentHour < hours.length - 1 && currentHour >= 0) {
                 currentHour++;
                 document.getElementById("hour").innerHTML = hours[currentHour];
+
+                console.log(hours[currentHour]);
             } else {
                 currentHour = 0;
                 document.getElementById("hour").innerHTML = hours[currentHour];
+                console.log(hours[currentHour]);
             }
+
+            textArea.value = textAreaBody[currentHour];
+
         });
         leftModalArrow.addEventListener('click', function () {
             if (currentHour <= hours.length && currentHour >= 0) {
                 if (currentHour === 0) {
                     currentHour = hours.length;
-
                 }
 
                 currentHour--;
                 document.getElementById("hour").innerHTML = hours[currentHour];
-                console.log(currentHour);
-                console.log(hourDiv);
                 console.log(hours[currentHour]);
+
+                textArea.value = textAreaBody[currentHour];
             }
         });
+        modalSave.addEventListener('click', function (event) {
+            textAreaBody[currentHour] = textArea.value;
+            let modalHead = modalHeader.textContent.toString().split(', ')[1];
+
+            let str = JSON.stringify({
+                text: textArea.value,
+                hour: hours[currentHour]
+            });
+           localStorage.setItem(modalHead, str);
+           JSON.parse(localStorage.getItem(hours[currentHour]));
+
+            for(var i=0, len=localStorage.length; i<len; i++) {
+                if(typeof(Storage) !== "undefined") {
+                    var key = localStorage.key(i);
+                    var value = localStorage[key];
+                }
+
+            }
+
+           textArea.value = "";
+
+
+
+
+        });
+
+
+        /*----Create Modal - END----*/
 
         /*--- Compile calendar and emulate month switch START ---*/
         const renderCalendarBody = now => {
@@ -225,6 +255,7 @@
 
         renderCalendar(now);
         addEventListenerToCell();
+        /*--- Compile calendar and emulate month switch END ---*/
 
     </script>
 </footer>
